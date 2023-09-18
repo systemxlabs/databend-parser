@@ -19,14 +19,11 @@
 //! But instead, they are used by the caller of meta-client, e.g, databend-query.
 
 #![allow(clippy::uninlined_format_args)]
-#![deny(unused_crate_dependencies)]
 #![feature(no_sanitize)]
 
 pub mod app_error;
-pub mod background;
 pub mod data_mask;
 pub mod principal;
 pub mod schema;
 pub mod share;
 pub mod storage;
-pub mod tenant;
