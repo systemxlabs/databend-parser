@@ -1,8 +1,0 @@
-name: 'Cleanup'
-description: 'This action is a cleanup action which free up the space for other actions.'
-runs:
-  using: "composite"
-  steps:
-    - uses: curoky/cleanup-disk-action@v2.0
-      with:
-        retain: 'python,node'
