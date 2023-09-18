@@ -21,7 +21,6 @@ members = [
     "src/common/http",
     "src/common/io",
     "src/common/metrics",
-    "src/common/openai",
     "src/common/tracing",
     "src/common/vector",
     # Query
