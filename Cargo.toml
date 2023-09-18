@@ -54,7 +54,7 @@ members = [
     "src/query/storages/common/index",
     "src/query/storages/common/pruner",
     "src/query/storages/common/table-meta",
-    "src/query/storages/factory",
+    #"src/query/storages/factory",
     "src/query/storages/fuse",
     "src/query/storages/hive/hive",
     "src/query/storages/iceberg",
@@ -69,11 +69,11 @@ members = [
     "src/query/storages/parquet",
     "src/query/storages/result_cache",
     "src/query/users",
-    "src/query/ee-features/vacuum-handler",
-    "src/query/ee-features/background-service",
-    "src/query/ee-features/aggregating-index",
-    "src/query/ee-features/data-mask",
-    "src/query/ee-features/table-lock",
+    #"src/query/ee-features/vacuum-handler",
+    #"src/query/ee-features/background-service",
+    #"src/query/ee-features/aggregating-index",
+    #"src/query/ee-features/data-mask",
+    #"src/query/ee-features/table-lock",
     # databend-query
     #"src/query/service",
     # enterprise
@@ -94,11 +94,11 @@ members = [
     "src/meta/proto-conv",
     "src/meta/protos",
     # databend-meta
-    "src/meta/service",
+    #"src/meta/service",
     # sqllogictest
     #"tests/sqllogictests",
 
-    "src/bendpy",
+    #"src/bendpy",
     # sqlsmith
     #"src/tests/sqlsmith",
 ]
