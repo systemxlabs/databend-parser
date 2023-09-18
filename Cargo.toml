@@ -16,7 +16,6 @@ members = [
     "src/common/cache",
     "src/common/compress",
     "src/common/exception",
-    "src/common/grpc",
     "src/common/hashtable",
     "src/common/http",
     "src/common/io",
