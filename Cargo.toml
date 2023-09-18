@@ -8,8 +8,6 @@ edition = "2021"
 [workspace]
 resolver = "2"
 members = [
-    # Binaries
-    #"src/binaries",
     # Common
     "src/common/arrow",
     "src/common/auth",
@@ -25,82 +23,17 @@ members = [
     "src/common/metrics",
     "src/common/openai",
     "src/common/tracing",
-    "src/common/storage",
     "src/common/vector",
-    "src/common/license",
     # Query
     "src/query/ast",
-    "src/query/codegen",
-    "src/query/config",
-    "src/query/constraint",
-    "src/query/catalog",
-    "src/query/sharing",
-    "src/query/sharing-endpoint",
     "src/query/datavalues",
     "src/query/expression",
-    "src/query/formats",
-    "src/query/functions",
-    "src/query/management",
-    "src/query/pipeline/core",
-    "src/query/pipeline/sinks",
-    "src/query/pipeline/sources",
-    "src/query/pipeline/transforms",
-    "src/query/profile",
-    "src/query/settings",
-    "src/query/sql",
-    "src/query/storages/common/blocks",
-    "src/query/storages/common/cache",
-    "src/query/storages/common/cache-manager",
-    "src/query/storages/common/index",
-    "src/query/storages/common/pruner",
-    "src/query/storages/common/table-meta",
-    #"src/query/storages/factory",
-    "src/query/storages/fuse",
-    "src/query/storages/hive/hive",
-    "src/query/storages/iceberg",
-    "src/query/storages/information-schema",
-    "src/query/storages/memory",
-    "src/query/storages/null",
-    "src/query/storages/random",
-    "src/query/storages/share",
-    "src/query/storages/stage",
-    "src/query/storages/system",
-    "src/query/storages/view",
-    "src/query/storages/parquet",
-    "src/query/storages/result_cache",
-    "src/query/users",
-    #"src/query/ee-features/vacuum-handler",
-    #"src/query/ee-features/background-service",
-    #"src/query/ee-features/aggregating-index",
-    #"src/query/ee-features/data-mask",
-    #"src/query/ee-features/table-lock",
-    # databend-query
-    #"src/query/service",
-    # enterprise
-    #"src/query/ee",
-    # Meta
-    "src/meta/api",
-    "src/meta/app",
-    "src/meta/embedded",
-    "src/meta/kvapi",
-    "src/meta/process",
-    "src/meta/raft-store",
-    "src/meta/sled-store",
-    "src/meta/stoerr",
-    "src/meta/store",
-    "src/meta/types",
-    "src/meta/ee",
-    # meta proto
-    "src/meta/proto-conv",
-    "src/meta/protos",
-    # databend-meta
-    #"src/meta/service",
-    # sqllogictest
-    #"tests/sqllogictests",
 
-    #"src/bendpy",
-    # sqlsmith
-    #"src/tests/sqlsmith",
+    # Meta
+    "src/meta/stoerr",
+    "src/meta/types",
+    "src/meta/app",
+    "src/meta/kvapi",
 ]
 
 [workspace.dependencies]
