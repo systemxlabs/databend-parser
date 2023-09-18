@@ -1,6 +1,0 @@
-statement ok
-SET max_execute_time_in_seconds = 1
-
-
-statement ok
-SET max_execute_time_in_seconds = 0

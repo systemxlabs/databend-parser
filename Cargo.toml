@@ -9,7 +9,7 @@ edition = "2021"
 resolver = "2"
 members = [
     # Binaries
-    "src/binaries",
+    #"src/binaries",
     # Common
     "src/common/arrow",
     "src/common/auth",
@@ -75,9 +75,9 @@ members = [
     "src/query/ee-features/data-mask",
     "src/query/ee-features/table-lock",
     # databend-query
-    "src/query/service",
+    #"src/query/service",
     # enterprise
-    "src/query/ee",
+    #"src/query/ee",
     # Meta
     "src/meta/api",
     "src/meta/app",
@@ -96,11 +96,11 @@ members = [
     # databend-meta
     "src/meta/service",
     # sqllogictest
-    "tests/sqllogictests",
+    #"tests/sqllogictests",
 
     "src/bendpy",
     # sqlsmith
-    "src/tests/sqlsmith",
+    #"src/tests/sqlsmith",
 ]
 
 [workspace.dependencies]

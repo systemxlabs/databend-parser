@@ -577,7 +577,7 @@ dependencies = [
  "hash_hasher",
  "hashbrown 0.14.0",
  "indexmap 1.9.2",
- "itertools 0.10.5",
+ "itertools",
  "json-deserializer",
  "lexical-core",
  "lz4",
@@ -614,7 +614,7 @@ dependencies = [
  "async-backtrace-attributes",
  "dashmap",
  "futures",
- "itertools 0.10.5",
+ "itertools",
  "loom",
  "once_cell",
  "pin-project-lite",
@@ -1651,7 +1651,7 @@ name = "codegen"
 version = "0.1.0"
 dependencies = [
  "common-expression",
- "itertools 0.10.5",
+ "itertools",
 ]
 
 [[package]]
@@ -1740,7 +1740,7 @@ dependencies = [
  "ethnum",
  "fast-float",
  "goldenfile",
- "itertools 0.10.5",
+ "itertools",
  "logos",
  "nom",
  "nom-rule",
@@ -1965,7 +1965,7 @@ dependencies = [
  "futures",
  "goldenfile",
  "hex",
- "itertools 0.10.5",
+ "itertools",
  "jsonb",
  "lexical-core",
  "log",
@@ -2045,7 +2045,7 @@ dependencies = [
  "goldenfile",
  "h3o",
  "hex",
- "itertools 0.10.5",
+ "itertools",
  "jsonb",
  "lexical-core",
  "libm",
@@ -2581,7 +2581,7 @@ dependencies = [
  "common-meta-types",
  "common-users",
  "dashmap",
- "itertools 0.10.5",
+ "itertools",
  "log",
  "num_cpus",
  "once_cell",
@@ -2655,7 +2655,7 @@ dependencies = [
  "enum-as-inner",
  "globiter",
  "indexmap 2.0.0",
- "itertools 0.10.5",
+ "itertools",
  "log",
  "num-derive",
  "num-traits",
@@ -2755,7 +2755,7 @@ dependencies = [
  "futures",
  "futures-util",
  "indexmap 2.0.0",
- "itertools 0.10.5",
+ "itertools",
  "jsonb",
  "lazy_static",
  "log",
@@ -3048,7 +3048,7 @@ dependencies = [
  "common-storages-result-cache",
  "common-storages-view",
  "common-users",
- "itertools 0.10.5",
+ "itertools",
  "jsonb",
  "log",
  "once_cell",
@@ -3309,7 +3309,7 @@ dependencies = [
  "ciborium",
  "clap 3.2.23",
  "criterion-plot",
- "itertools 0.10.5",
+ "itertools",
  "lazy_static",
  "num-traits",
  "oorandom",
@@ -3330,7 +3330,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6b50826342786a51a89e2da3a28f1c32b06e387201bc2d19791f622c673706b1"
 dependencies = [
  "cast",
- "itertools 0.10.5",
+ "itertools",
 ]
 
 [[package]]
@@ -3640,103 +3640,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "databend-binaries"
-version = "0.1.0"
-dependencies = [
- "anyerror",
- "anyhow",
- "async-backtrace",
- "background-service",
- "chrono",
- "clap 4.4.2",
- "common-base",
- "common-config",
- "common-exception",
- "common-grpc",
- "common-license",
- "common-meta-api",
- "common-meta-app",
- "common-meta-client",
- "common-meta-kvapi",
- "common-meta-raft-store",
- "common-meta-sled-store",
- "common-meta-store",
- "common-meta-types",
- "common-metrics",
- "common-storage",
- "common-tracing",
- "databend-meta",
- "databend-query",
- "enterprise-query",
- "futures",
- "limits-rs",
- "log",
- "minitrace",
- "opendal",
- "poem",
- "sentry",
- "serde",
- "serde_json",
- "serfig",
- "sharing-endpoint",
- "storages-common-table-meta",
- "tokio",
- "tokio-stream",
- "tonic 0.9.2",
- "url",
-]
-
-[[package]]
-name = "databend-client"
-version = "0.6.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f2941c5d2097957273b7bcd5ac435cbb26300623ad552b338a2c33e11ad2e1c6"
-dependencies = [
- "http",
- "once_cell",
- "percent-encoding",
- "reqwest",
- "serde",
- "serde_json",
- "tokio",
- "tokio-retry",
- "tokio-stream",
- "tokio-util",
- "url",
-]
-
-[[package]]
-name = "databend-driver"
-version = "0.6.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c28bce2614c0380c1e53484f0ee69927838a5ce7dd25bbb2f2b1d82eef15cfbd"
-dependencies = [
- "arrow",
- "async-trait",
- "chrono",
- "databend-client",
- "databend-driver-macros",
- "databend-sql",
- "dyn-clone",
- "glob",
- "percent-encoding",
- "serde_json",
- "tokio",
- "tokio-stream",
- "url",
-]
-
-[[package]]
-name = "databend-driver-macros"
-version = "0.6.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1158e6a1226782ff59133a62c802b376e46766f4776c2b57e28dd7c0528b2b0a"
-dependencies = [
- "quote",
- "syn 2.0.29",
-]
-
-[[package]]
 name = "databend-meta"
 version = "0.1.0"
 dependencies = [
@@ -3762,7 +3665,7 @@ dependencies = [
  "derive_more",
  "env_logger",
  "futures",
- "itertools 0.10.5",
+ "itertools",
  "lazy_static",
  "log",
  "logcall",
@@ -3872,7 +3775,7 @@ dependencies = [
  "http",
  "humantime",
  "indicatif",
- "itertools 0.10.5",
+ "itertools",
  "jsonb",
  "jwt-simple",
  "log",
@@ -3933,69 +3836,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "databend-sql"
-version = "0.6.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ab55fde0ba5e4e967265d0f2757b51969abdea338230a8b120a2799f38c48335"
-dependencies = [
- "arrow",
- "chrono",
- "databend-client",
- "glob",
- "serde",
- "serde_json",
- "tokio-stream",
- "url",
-]
-
-[[package]]
-name = "databend-sqllogictests"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "clap 4.4.2",
- "common-exception",
- "env_logger",
- "futures-util",
- "lazy_static",
- "mysql_async",
- "rand 0.8.5",
- "regex",
- "reqwest",
- "serde",
- "serde_json",
- "sqllogictest",
- "thiserror",
- "tokio",
- "walkdir",
-]
-
-[[package]]
-name = "databend-sqlsmith"
-version = "0.1.0"
-dependencies = [
- "chrono-tz",
- "clap 4.4.2",
- "common-ast",
- "common-exception",
- "common-expression",
- "common-formats",
- "common-functions",
- "common-io",
- "common-sql",
- "databend-client",
- "databend-driver",
- "ethnum",
- "itertools 0.10.5",
- "jsonb",
- "rand 0.8.5",
- "roaring",
- "tokio",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
 name = "deadpool"
 version = "0.9.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4020,7 +3860,6 @@ version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bef552e6f588e446098f6ba40d89ac146c8c7b64aade83c051ee00bb5d2bc18d"
 dependencies = [
- "serde",
  "uuid",
 ]
 
@@ -4291,53 +4130,6 @@ name = "enterprise-meta"
 version = "0.1.0"
 dependencies = [
  "common-building",
-]
-
-[[package]]
-name = "enterprise-query"
-version = "0.1.0"
-dependencies = [
- "aggregating-index",
- "arrow-array",
- "async-backtrace",
- "async-trait",
- "background-service",
- "chrono",
- "chrono-tz",
- "common-arrow",
- "common-base",
- "common-building",
- "common-catalog",
- "common-config",
- "common-exception",
- "common-expression",
- "common-io",
- "common-license",
- "common-meta-api",
- "common-meta-app",
- "common-meta-kvapi",
- "common-meta-store",
- "common-meta-types",
- "common-settings",
- "common-sql",
- "common-storages-fuse",
- "common-tracing",
- "common-users",
- "dashmap",
- "data-mask-feature",
- "databend-query",
- "futures",
- "futures-util",
- "jsonb",
- "jwt-simple",
- "log",
- "opendal",
- "storages-common-cache",
- "storages-common-table-meta",
- "table-lock",
- "tempfile",
- "vacuum-handler",
- "virtual-column",
 ]
 
 [[package]]
@@ -4764,12 +4556,6 @@ dependencies = [
  "quote",
  "syn 1.0.109",
 ]
-
-[[package]]
-name = "fs-err"
-version = "2.9.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0845fa252299212f0389d64ba26f34fa32cfe41588355f21ed507c59a0f64541"
 
 [[package]]
 name = "fs2"
@@ -6326,7 +6112,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0757cd38a6dc71ff622f52309d213d1b3a39297f49db6aaf6a820f9487c7cb34"
 dependencies = [
  "anyhow",
- "itertools 0.10.5",
+ "itertools",
 ]
 
 [[package]]
@@ -7041,15 +6827,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "itertools"
-version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57"
-dependencies = [
- "either",
-]
-
-[[package]]
 name = "itoa"
 version = "1.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7353,17 +7130,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "348108ab3fba42ec82ff6e9564fc4ca0247bdccdc68dd8af9764bbc79c3c8ffb"
 
 [[package]]
-name = "libtest-mimic"
-version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d7b603516767d1ab23d0de09d023e62966c3322f7148297c35cf3d97aa8b37fa"
-dependencies = [
- "clap 4.4.2",
- "termcolor",
- "threadpool",
-]
-
-[[package]]
 name = "libz-sys"
 version = "1.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7372,15 +7138,6 @@ dependencies = [
  "cc",
  "pkg-config",
  "vcpkg",
-]
-
-[[package]]
-name = "limits-rs"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "19d3f1678107a67d955d3118a3f1d93db692c514849b53bd1746f5195d28a1fc"
-dependencies = [
- "thiserror",
 ]
 
 [[package]]
@@ -7720,16 +7477,6 @@ name = "mime"
 version = "0.3.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2a60c7ce501c71e03a9c9c0d35b861413ae925bd979cc7a4e30d060069aaac8d"
-
-[[package]]
-name = "mime_guess"
-version = "2.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4192263c238a5f0d0c6bfd21f336a313a4ce1c450542449ca191bb657b4642ef"
-dependencies = [
- "mime",
- "unicase",
-]
 
 [[package]]
 name = "minimal-lexical"
@@ -8505,17 +8252,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "os_info"
-version = "3.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5c424bc68d15e0778838ac013b5b3449544d8133633d8016319e7e05a820b8c0"
-dependencies = [
- "log",
- "serde",
- "winapi",
-]
-
-[[package]]
 name = "os_str_bytes"
 version = "6.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -8535,12 +8271,6 @@ name = "overload"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b15813163c1d831bf4a13c3610c05c0d03b39feb07f7e09fa234dac9b15aaf39"
-
-[[package]]
-name = "owo-colors"
-version = "3.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c1b04fb49957986fdce4d6ee7a65027d55d4b6d2265e5848bbb507b58ccfdb6f"
 
 [[package]]
 name = "p256"
@@ -9060,7 +8790,7 @@ checksum = "59230a63c37f3e18569bdb90e4a89cbf5bf8b06fea0b84e65ea10cc4df47addd"
 dependencies = [
  "difflib",
  "float-cmp",
- "itertools 0.10.5",
+ "itertools",
  "normalize-line-endings",
  "predicates-core",
  "regex",
@@ -9273,7 +9003,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ef7a8ed15bcffc55fe0328931ef20d393bb89ad704756a37bd20cffb4804f306"
 dependencies = [
  "chrono",
- "itertools 0.10.5",
+ "itertools",
  "lazy_static",
  "regex",
 ]
@@ -9296,7 +9026,7 @@ checksum = "119533552c9a7ffacc21e099c24a0ac8bb19c2a2a3f363de84cd9b844feab270"
 dependencies = [
  "bytes",
  "heck 0.4.1",
- "itertools 0.10.5",
+ "itertools",
  "lazy_static",
  "log",
  "multimap",
@@ -9317,7 +9047,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e5d2d8d10f3c6ded6da8b05b5fb3b8a5082514344d56c9f871412d29b4e075b4"
 dependencies = [
  "anyhow",
- "itertools 0.10.5",
+ "itertools",
  "proc-macro2",
  "quote",
  "syn 1.0.109",
@@ -9816,7 +9546,6 @@ dependencies = [
  "js-sys",
  "log",
  "mime",
- "mime_guess",
  "once_cell",
  "percent-encoding",
  "pin-project-lite",
@@ -10356,96 +10085,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sentry"
-version = "0.31.5"
-source = "git+https://github.com/getsentry/sentry-rust?rev=6ef6d97#6ef6d976225f029b6d58541eb267879b40778f0b"
-dependencies = [
- "httpdate",
- "reqwest",
- "rustls",
- "sentry-backtrace",
- "sentry-contexts",
- "sentry-core",
- "sentry-panic",
- "sentry-tracing",
- "tokio",
- "ureq",
- "webpki-roots 0.23.1",
-]
-
-[[package]]
-name = "sentry-backtrace"
-version = "0.31.5"
-source = "git+https://github.com/getsentry/sentry-rust?rev=6ef6d97#6ef6d976225f029b6d58541eb267879b40778f0b"
-dependencies = [
- "backtrace",
- "once_cell",
- "regex",
- "sentry-core",
-]
-
-[[package]]
-name = "sentry-contexts"
-version = "0.31.5"
-source = "git+https://github.com/getsentry/sentry-rust?rev=6ef6d97#6ef6d976225f029b6d58541eb267879b40778f0b"
-dependencies = [
- "hostname",
- "libc",
- "os_info",
- "rustc_version",
- "sentry-core",
- "uname",
-]
-
-[[package]]
-name = "sentry-core"
-version = "0.31.5"
-source = "git+https://github.com/getsentry/sentry-rust?rev=6ef6d97#6ef6d976225f029b6d58541eb267879b40778f0b"
-dependencies = [
- "once_cell",
- "rand 0.8.5",
- "sentry-types",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "sentry-panic"
-version = "0.31.5"
-source = "git+https://github.com/getsentry/sentry-rust?rev=6ef6d97#6ef6d976225f029b6d58541eb267879b40778f0b"
-dependencies = [
- "sentry-backtrace",
- "sentry-core",
-]
-
-[[package]]
-name = "sentry-tracing"
-version = "0.31.5"
-source = "git+https://github.com/getsentry/sentry-rust?rev=6ef6d97#6ef6d976225f029b6d58541eb267879b40778f0b"
-dependencies = [
- "sentry-backtrace",
- "sentry-core",
- "tracing-core",
- "tracing-subscriber",
-]
-
-[[package]]
-name = "sentry-types"
-version = "0.31.5"
-source = "git+https://github.com/getsentry/sentry-rust?rev=6ef6d97#6ef6d976225f029b6d58541eb267879b40778f0b"
-dependencies = [
- "debugid",
- "getrandom 0.2.8",
- "hex",
- "serde",
- "serde_json",
- "thiserror",
- "time 0.3.28",
- "url",
- "uuid",
-]
-
-[[package]]
 name = "seq-macro"
 version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -10909,29 +10548,6 @@ checksum = "9d1e996ef02c474957d681f1b05213dfb0abab947b446a62d37770b23500184a"
 dependencies = [
  "base64ct",
  "der 0.7.6",
-]
-
-[[package]]
-name = "sqllogictest"
-version = "0.15.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2883a176844bd22f2ded429ec6a1e16f3522f770475bf47e3494dcf22a50abd6"
-dependencies = [
- "async-trait",
- "educe",
- "fs-err",
- "futures",
- "glob",
- "humantime",
- "itertools 0.11.0",
- "libtest-mimic",
- "md-5",
- "owo-colors",
- "regex",
- "similar",
- "tempfile",
- "thiserror",
- "tracing",
 ]
 
 [[package]]
@@ -12112,15 +11728,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "uname"
-version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b72f89f0ca32e4db1c04e2a72f5345d59796d4866a1ee0609084569f73683dc8"
-dependencies = [
- "libc",
-]
-
-[[package]]
 name = "uncased"
 version = "0.9.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -12919,3 +12526,8 @@ dependencies = [
  "libc",
  "pkg-config",
 ]
+
+[[patch.unused]]
+name = "sentry"
+version = "0.31.5"
+source = "git+https://github.com/getsentry/sentry-rust?rev=6ef6d97#6ef6d976225f029b6d58541eb267879b40778f0b"

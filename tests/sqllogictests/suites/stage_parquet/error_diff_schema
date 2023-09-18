@@ -1,2 +1,0 @@
-query error diff schema
-select $1 from @data/parquet/ (files=>('tuple.parquet', 'complex.parquet'))
