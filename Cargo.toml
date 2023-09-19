@@ -20,7 +20,6 @@ members = [
 
     # Meta
     "src/meta/stoerr",
-    "src/meta/types",
     "src/meta/app",
 ]
 
