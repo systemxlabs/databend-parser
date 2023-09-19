@@ -18,7 +18,6 @@ members = [
     # Query
     "src/query/ast",
     "src/query/datavalues",
-    "src/query/expression",
 
     # Meta
     "src/meta/stoerr",
