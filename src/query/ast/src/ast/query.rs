@@ -177,7 +177,7 @@ impl SelectTarget {
 
     pub fn has_window(&self) -> bool {
         match self {
-            SelectTarget::AliasedExpr { box expr, .. } => match expr {
+            SelectTarget::AliasedExpr { expr, .. } => match expr.as_ref() {
                 Expr::FunctionCall { window, .. } => window.is_some(),
                 _ => false,
             },
@@ -187,7 +187,7 @@ impl SelectTarget {
 
     pub fn function_call_name(&self) -> Option<String> {
         match self {
-            SelectTarget::AliasedExpr { box expr, .. } => match expr {
+            SelectTarget::AliasedExpr {  expr, .. } => match expr.as_ref() {
                 Expr::FunctionCall { name, window, .. } if window.is_none() => {
                     Some(name.name.to_lowercase())
                 }

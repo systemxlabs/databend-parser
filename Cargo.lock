@@ -111,15 +111,15 @@ dependencies = [
 
 [[package]]
 name = "anstyle"
-version = "1.0.0"
+version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "41ed9a86bf92ae6580e0a31281f65a1b1d867c0cc68d5346e2ae128dddfa6a7d"
+checksum = "b84bf0a05bbb2a83e5eb6fa36bb6e87baa08193c35ff52bbf6b38d8af2890e46"
 
 [[package]]
 name = "anstyle-parse"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e765fd216e48e067936442276d1d57399e37bce53c264d6fefbe298080cb57ee"
+checksum = "938874ff5980b03a87c5524b3ae5b59cf99b1d6bc836848df7bc5ada9643c333"
 dependencies = [
  "utf8parse",
 ]
@@ -1014,9 +1014,9 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "4.4.2"
+version = "4.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6a13b88d2c62ff462f88e4a121f17a82c1af05693a2f192b5c38d14de73c19f6"
+checksum = "84ed82781cea27b43c9b106a979fe450a13a31aab0500595fb3fc06616de08e6"
 dependencies = [
  "clap_builder",
  "clap_derive 4.4.2",
@@ -4330,7 +4330,7 @@ dependencies = [
 [[package]]
 name = "macros"
 version = "0.8.4"
-source = "git+https://github.com/drmingdrmer/openraft?tag=v0.8.4-alpha.8#3fc8ede609beb787aee8199b06a40ac9742aa116"
+source = "git+https://github.com/drmingdrmer/openraft?tag=v0.8.4-alpha.8#4b78dd38b9f3b22d87695fb06446dcf0311629c2"
 
 [[package]]
 name = "maplit"
@@ -4822,9 +4822,9 @@ dependencies = [
 
 [[package]]
 name = "openraft"
-version = "0.7.5"
+version = "0.7.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83a564e30e56d0064e47f51cd6d480160f042a1f960dde15eaf2096be20d290e"
+checksum = "04aaa62d64ce668ebbb2ff14fafc7fb8506df01a25b43db49a05cd3726db443e"
 dependencies = [
  "anyerror",
  "anyhow",
@@ -4846,18 +4846,18 @@ dependencies = [
 [[package]]
 name = "openraft"
 version = "0.8.4"
-source = "git+https://github.com/drmingdrmer/openraft?tag=v0.8.4-alpha.8#3fc8ede609beb787aee8199b06a40ac9742aa116"
+source = "git+https://github.com/drmingdrmer/openraft?tag=v0.8.4-alpha.8#4b78dd38b9f3b22d87695fb06446dcf0311629c2"
 dependencies = [
  "anyerror",
  "anyhow",
  "async-trait",
  "byte-unit",
- "clap 4.4.2",
+ "clap 4.4.3",
  "derive_more",
  "futures",
  "macros",
  "maplit",
- "openraft 0.7.5",
+ "openraft 0.7.6",
  "pin-utils",
  "rand",
  "serde",
