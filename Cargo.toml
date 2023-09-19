@@ -9,7 +9,6 @@ edition = "2021"
 resolver = "2"
 members = [
     # Common
-    "src/common/arrow",
     "src/common/base",
     "src/common/exception",
     "src/common/io",
