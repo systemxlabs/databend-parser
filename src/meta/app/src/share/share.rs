@@ -26,8 +26,6 @@ use enumflags2::BitFlags;
 use crate::app_error::AppError;
 use crate::app_error::WrongShareObject;
 use crate::schema::DatabaseMeta;
-use crate::schema::TableInfo;
-use crate::schema::TableMeta;
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Default, Eq, PartialEq)]
 pub struct ShareNameIdent {
@@ -172,18 +170,6 @@ impl Display for ShareGrantObjectName {
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub enum ShareGrantObjectSeqAndId {
-    // db_meta_seq, db_id, DatabaseMeta
-    Database(u64, u64, DatabaseMeta),
-    // db_id, table_meta_seq, table_id, table_meta
-    Table(u64, u64, u64, TableMeta),
-}
-
-// share name and shared (table name, table info) map
-pub type TableInfoMap = BTreeMap<String, TableInfo>;
-pub type ShareTableInfoMap = (String, Option<TableInfoMap>);
-
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct GrantShareObjectReq {
     pub share_name: ShareNameIdent,
     pub object: ShareGrantObjectName,
@@ -191,12 +177,6 @@ pub struct GrantShareObjectReq {
     pub privilege: ShareGrantObjectPrivilege,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub struct GrantShareObjectReply {
-    pub share_id: u64,
-    pub spec_vec: Option<Vec<ShareSpec>>,
-    pub share_table_info: ShareTableInfoMap,
-}
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct RevokeShareObjectReq {
@@ -206,12 +186,6 @@ pub struct RevokeShareObjectReq {
     pub update_on: DateTime<Utc>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub struct RevokeShareObjectReply {
-    pub share_id: u64,
-    pub spec_vec: Option<Vec<ShareSpec>>,
-    pub share_table_info: ShareTableInfoMap,
-}
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct GetShareGrantObjectReq {
@@ -416,19 +390,6 @@ impl Display for ShareEndpointIdToName {
 pub enum ShareGrantObject {
     Database(u64),
     Table(u64),
-}
-
-impl ShareGrantObject {
-    pub fn new(seq_and_id: &ShareGrantObjectSeqAndId) -> ShareGrantObject {
-        match seq_and_id {
-            ShareGrantObjectSeqAndId::Database(_seq, db_id, _meta) => {
-                ShareGrantObject::Database(*db_id)
-            }
-            ShareGrantObjectSeqAndId::Table(_db_id, _seq, table_id, _meta) => {
-                ShareGrantObject::Table(*table_id)
-            }
-        }
-    }
 }
 
 impl Display for ShareGrantObject {
@@ -655,40 +616,6 @@ impl ShareMeta {
                         self.entries.insert(key, entry);
                     }
                 };
-            }
-        }
-    }
-
-    pub fn has_granted_privileges(
-        &self,
-        obj_name: &ShareGrantObjectName,
-        object: &ShareGrantObjectSeqAndId,
-        privileges: ShareGrantObjectPrivilege,
-    ) -> Result<bool, AppError> {
-        match object {
-            ShareGrantObjectSeqAndId::Database(_seq, db_id, _meta) => match &self.database {
-                Some(db) => match db.object {
-                    ShareGrantObject::Database(self_db_id) => {
-                        if self_db_id != *db_id {
-                            Err(AppError::WrongShareObject(WrongShareObject::new(
-                                obj_name.to_string(),
-                            )))
-                        } else {
-                            Ok(db.has_granted_privileges(privileges))
-                        }
-                    }
-                    ShareGrantObject::Table(_) => {
-                        unreachable!("grant database CANNOT be a table");
-                    }
-                },
-                None => Ok(false),
-            },
-            ShareGrantObjectSeqAndId::Table(_db_id, _table_seq, table_id, _meta) => {
-                let key = ShareGrantObject::Table(*table_id).to_string();
-                Ok(self
-                    .entries
-                    .get(&key)
-                    .map_or(false, |entry| entry.has_granted_privileges(privileges)))
             }
         }
     }

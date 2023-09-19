@@ -24,9 +24,6 @@ use std::sync::Arc;
 use chrono::DateTime;
 use chrono::Utc;
 use common_exception::Result;
-use common_expression::FieldIndex;
-use common_expression::TableField;
-use common_expression::TableSchema;
 use common_meta_types::MatchSeq;
 use common_meta_types::MetaId;
 use maplit::hashmap;
@@ -35,7 +32,6 @@ use crate::schema::database::DatabaseNameIdent;
 use crate::schema::Ownership;
 use crate::share::ShareNameIdent;
 use crate::share::ShareSpec;
-use crate::share::ShareTableInfoMap;
 use crate::storage::StorageParams;
 
 /// Globally unique identifier of a version of TableMeta.
@@ -168,31 +164,6 @@ impl Display for DatabaseType {
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Eq, PartialEq, Default)]
-pub struct TableInfo {
-    pub ident: TableIdent,
-
-    /// For a table it is `db_name.table_name`.
-    /// For a table function, it is `table_name(args)`
-    pub desc: String,
-
-    /// `name` is meant to be used with table-function.
-    /// Table-function is identified by `name`.
-    /// A table in the contrast, can only be identified by table-id.
-    pub name: String,
-
-    /// The essential information about a table definition.
-    ///
-    /// It is about what a table actually is.
-    /// `name`, `id` or `version` is not included in the table structure definition.
-    pub meta: TableMeta,
-
-    pub tenant: String,
-
-    // table belong to which type of database.
-    pub db_type: DatabaseType,
-}
-
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Eq, PartialEq, Default)]
 pub struct TableStatistics {
     /// Number of rows
     pub number_of_rows: u64,
@@ -208,192 +179,6 @@ pub struct TableStatistics {
 
     /// number of blocks
     pub number_of_blocks: Option<u64>,
-}
-
-/// The essential state that defines what a table is.
-///
-/// It is what a meta store just needs to save.
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Eq, PartialEq)]
-pub struct TableMeta {
-    pub schema: Arc<TableSchema>,
-    pub catalog: String,
-    pub engine: String,
-    pub engine_options: BTreeMap<String, String>,
-    pub storage_params: Option<StorageParams>,
-    pub part_prefix: String,
-    pub options: BTreeMap<String, String>,
-    // The default cluster key.
-    pub default_cluster_key: Option<String>,
-    // All cluster keys that have been defined.
-    pub cluster_keys: Vec<String>,
-    // The sequence number of default_cluster_key in cluster_keys.
-    pub default_cluster_key_id: Option<u32>,
-    pub created_on: DateTime<Utc>,
-    pub updated_on: DateTime<Utc>,
-    pub comment: String,
-    pub field_comments: Vec<String>,
-
-    // if used in CreateTableReq, this field MUST set to None.
-    pub drop_on: Option<DateTime<Utc>>,
-    pub statistics: TableStatistics,
-    // shared by share_id
-    pub shared_by: BTreeSet<u64>,
-    pub column_mask_policy: Option<BTreeMap<String, String>>,
-    pub owner: Option<Ownership>,
-}
-
-impl TableMeta {
-    pub fn add_columns(&mut self, fields: &[TableField], field_comments: &[String]) -> Result<()> {
-        let mut new_schema = self.schema.as_ref().to_owned();
-        new_schema.add_columns(fields)?;
-        self.schema = Arc::new(new_schema);
-        field_comments.iter().for_each(|c| {
-            self.field_comments.push(c.to_owned());
-        });
-        Ok(())
-    }
-
-    pub fn add_column(
-        &mut self,
-        field: &TableField,
-        comment: &str,
-        index: FieldIndex,
-    ) -> Result<()> {
-        let mut new_schema = self.schema.as_ref().to_owned();
-        new_schema.add_column(field, index)?;
-        self.schema = Arc::new(new_schema);
-        self.field_comments.insert(index, comment.to_owned());
-        Ok(())
-    }
-
-    pub fn drop_column(&mut self, column: &str) -> Result<()> {
-        let mut new_schema = self.schema.as_ref().to_owned();
-        let index = new_schema.drop_column(column)?;
-        self.field_comments.remove(index);
-        self.schema = Arc::new(new_schema);
-        Ok(())
-    }
-}
-
-impl TableInfo {
-    /// Create a TableInfo with only db, table, schema
-    pub fn simple(db: &str, table: &str, schema: Arc<TableSchema>) -> TableInfo {
-        TableInfo {
-            desc: format!("'{}'.'{}'", db, table),
-            name: table.to_string(),
-            meta: TableMeta {
-                schema,
-                ..Default::default()
-            },
-            ..Default::default()
-        }
-    }
-
-    pub fn new(db_name: &str, table_name: &str, ident: TableIdent, meta: TableMeta) -> TableInfo {
-        TableInfo {
-            ident,
-            desc: format!("'{}'.'{}'", db_name, table_name),
-            name: table_name.to_string(),
-            meta,
-            ..Default::default()
-        }
-    }
-
-    pub fn schema(&self) -> Arc<TableSchema> {
-        self.meta.schema.clone()
-    }
-
-    pub fn options(&self) -> &BTreeMap<String, String> {
-        &self.meta.options
-    }
-
-    pub fn catalog(&self) -> &str {
-        &self.meta.catalog
-    }
-
-    pub fn engine(&self) -> &str {
-        &self.meta.engine
-    }
-
-    pub fn engine_options(&self) -> &BTreeMap<String, String> {
-        &self.meta.engine_options
-    }
-
-    pub fn field_comments(&self) -> &Vec<String> {
-        &self.meta.field_comments
-    }
-
-    #[must_use]
-    pub fn set_schema(mut self, schema: Arc<TableSchema>) -> TableInfo {
-        self.meta.schema = schema;
-        self
-    }
-}
-
-impl Default for TableMeta {
-    fn default() -> Self {
-        TableMeta {
-            schema: Arc::new(TableSchema::empty()),
-            catalog: "default".to_string(),
-            engine: "".to_string(),
-            engine_options: BTreeMap::new(),
-            storage_params: None,
-            part_prefix: "".to_string(),
-            options: BTreeMap::new(),
-            default_cluster_key: None,
-            cluster_keys: vec![],
-            default_cluster_key_id: None,
-            created_on: Utc::now(),
-            updated_on: Utc::now(),
-            comment: "".to_string(),
-            field_comments: vec![],
-            drop_on: None,
-            statistics: Default::default(),
-            shared_by: BTreeSet::new(),
-            column_mask_policy: None,
-            owner: None,
-        }
-    }
-}
-
-impl TableMeta {
-    pub fn push_cluster_key(mut self, cluster_key: String) -> Self {
-        self.cluster_keys.push(cluster_key.clone());
-        self.default_cluster_key = Some(cluster_key);
-        self.default_cluster_key_id = Some(self.cluster_keys.len() as u32 - 1);
-        self
-    }
-
-    pub fn cluster_key(&self) -> Option<(u32, String)> {
-        self.default_cluster_key_id
-            .zip(self.default_cluster_key.clone())
-    }
-}
-
-impl Display for TableMeta {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "Engine: {}={:?}, Schema: {:?}, Options: {:?}, FieldComments: {:?} CreatedOn: {:?} DropOn: {:?}",
-            self.engine,
-            self.engine_options,
-            self.schema,
-            self.options,
-            self.field_comments,
-            self.created_on,
-            self.drop_on,
-        )
-    }
-}
-
-impl Display for TableInfo {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "DB.Table: {}, Table: {}-{}, Engine: {}",
-            self.desc, self.name, self.ident, self.meta.engine
-        )
-    }
 }
 
 /// Save table name id list history.
@@ -438,39 +223,6 @@ impl Display for TableIdList {
     }
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub struct CreateTableReq {
-    pub if_not_exists: bool,
-    pub name_ident: TableNameIdent,
-    pub table_meta: TableMeta,
-}
-
-impl CreateTableReq {
-    pub fn tenant(&self) -> &str {
-        &self.name_ident.tenant
-    }
-    pub fn db_name(&self) -> &str {
-        &self.name_ident.db_name
-    }
-    pub fn table_name(&self) -> &str {
-        &self.name_ident.table_name
-    }
-}
-
-impl Display for CreateTableReq {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "create_table(if_not_exists={}):{}/{}-{}={}",
-            self.if_not_exists,
-            self.tenant(),
-            self.db_name(),
-            self.table_name(),
-            self.table_meta
-        )
-    }
-}
-
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Eq, PartialEq)]
 pub struct CreateTableReply {
     pub table_id: u64,
@@ -505,11 +257,6 @@ impl Display for DropTableByIdReq {
             self.tb_id(),
         )
     }
-}
-
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub struct DropTableReply {
-    pub spec_vec: Option<(Vec<ShareSpec>, Vec<ShareTableInfoMap>)>,
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
@@ -596,39 +343,6 @@ pub struct UpsertTableOptionReq {
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub struct UpdateTableMetaReq {
-    pub table_id: u64,
-    pub seq: MatchSeq,
-    pub new_table_meta: TableMeta,
-    pub copied_files: Option<UpsertTableCopiedFileReq>,
-    pub deduplicated_label: Option<String>,
-}
-
-impl UpsertTableOptionReq {
-    pub fn new(
-        table_ident: &TableIdent,
-        key: impl Into<String>,
-        value: impl Into<String>,
-    ) -> UpsertTableOptionReq {
-        UpsertTableOptionReq {
-            table_id: table_ident.table_id,
-            seq: MatchSeq::Exact(table_ident.seq),
-            options: hashmap! {key.into() => Some(value.into())},
-        }
-    }
-}
-
-impl Display for UpsertTableOptionReq {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "upsert-table-options: table-id:{}({:?}) = {:?}",
-            self.table_id, self.seq, self.options
-        )
-    }
-}
-
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
 pub enum SetTableColumnMaskPolicyAction {
     // new mask name, old mask name(if any)
     Set(String, Option<String>),
@@ -643,21 +357,6 @@ pub struct SetTableColumnMaskPolicyReq {
     pub seq: MatchSeq,
     pub column: String,
     pub action: SetTableColumnMaskPolicyAction,
-}
-
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub struct SetTableColumnMaskPolicyReply {
-    pub share_table_info: Option<Vec<ShareTableInfoMap>>,
-}
-
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub struct UpsertTableOptionReply {
-    pub share_table_info: Option<Vec<ShareTableInfoMap>>,
-}
-
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub struct UpdateTableMetaReply {
-    pub share_table_info: Option<Vec<ShareTableInfoMap>>,
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
@@ -742,12 +441,6 @@ pub enum DroppedId {
     Db(u64, String),
     // db id, table id, table name
     Table(u64, u64, String),
-}
-
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub struct ListDroppedTableResp {
-    pub drop_table_infos: Vec<Arc<TableInfo>>,
-    pub drop_ids: Vec<DroppedId>,
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]

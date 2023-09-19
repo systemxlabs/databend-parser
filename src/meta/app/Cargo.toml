@@ -15,7 +15,6 @@ storage-hdfs = []
 
 [dependencies]
 common-exception = { path = "../../common/exception" }
-common-expression = { path = "../../query/expression" }
 common-io = { path = "../../common/io" }
 common-meta-kvapi = { path = "../kvapi" }
 common-meta-types = { path = "../types" }

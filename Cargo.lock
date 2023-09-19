@@ -1339,7 +1339,6 @@ dependencies = [
  "chrono-tz",
  "common-building",
  "common-exception",
- "common-expression",
  "common-io",
  "common-meta-kvapi",
  "common-meta-types",
