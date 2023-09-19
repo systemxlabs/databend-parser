@@ -17,9 +17,6 @@ members = [
     "src/common/io",
     # Query
     "src/query/ast",
-
-    # Meta
-    "src/meta/app",
 ]
 
 [workspace.dependencies]

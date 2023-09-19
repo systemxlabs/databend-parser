@@ -15,12 +15,12 @@
 use std::fmt::Display;
 use std::fmt::Formatter;
 
-use common_meta_app::principal::AuthType;
-use common_meta_app::principal::PrincipalIdentity;
-use common_meta_app::principal::UserIdentity;
-use common_meta_app::principal::UserOption;
-use common_meta_app::principal::UserOptionFlag;
-use common_meta_app::principal::UserPrivilegeType;
+use crate::meta::AuthType;
+use crate::meta::principal_identity::PrincipalIdentity;
+use crate::meta::user_identity::UserIdentity;
+use crate::meta::UserOption;
+use crate::meta::UserOptionFlag;
+use crate::meta::UserPrivilegeType;
 
 use crate::ast::write_comma_separated_list;
 

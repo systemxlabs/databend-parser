@@ -16,7 +16,7 @@ use std::collections::BTreeMap;
 use std::fmt::Display;
 use std::fmt::Formatter;
 
-use common_meta_app::schema::CatalogType;
+use crate::meta::CatalogType;
 
 use super::ShowLimit;
 use crate::ast::Identifier;

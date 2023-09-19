@@ -15,9 +15,9 @@
 use std::fmt::Display;
 use std::fmt::Formatter;
 
-use common_meta_app::principal::FileFormatOptionsAst;
-use common_meta_app::principal::PrincipalIdentity;
-use common_meta_app::principal::UserIdentity;
+use crate::meta::FileFormatOptionsAst;
+use crate::meta::principal_identity::PrincipalIdentity;
+use crate::meta::user_identity::UserIdentity;
 
 use super::merge_into::MergeIntoStmt;
 use super::*;
