@@ -1160,20 +1160,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "common-meta-kvapi"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "async-trait",
- "common-meta-types",
- "log",
- "minitrace",
- "serde",
- "thiserror",
- "tokio",
-]
-
-[[package]]
 name = "common-meta-stoerr"
 version = "0.1.0"
 dependencies = [
