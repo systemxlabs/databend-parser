@@ -1,1 +1,0 @@
-SELECT uniq(number % 3, number) FROM numbers(1000);

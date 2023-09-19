@@ -1,1 +1,0 @@
-SELECT count(*) FROM numbers(3);
