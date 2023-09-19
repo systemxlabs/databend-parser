@@ -16,7 +16,6 @@ storage-hdfs = []
 [dependencies]
 common-exception = { path = "../../common/exception" }
 common-io = { path = "../../common/io" }
-common-meta-types = { path = "../types" }
 
 anyerror = { workspace = true }
 chrono = { workspace = true }

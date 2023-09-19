@@ -24,8 +24,6 @@ use std::sync::Arc;
 use chrono::DateTime;
 use chrono::Utc;
 use common_exception::Result;
-use common_meta_types::MatchSeq;
-use common_meta_types::MetaId;
 use maplit::hashmap;
 
 use crate::schema::database::DatabaseNameIdent;
@@ -229,36 +227,6 @@ pub struct CreateTableReply {
     pub new_table: bool,
 }
 
-/// Drop table by id.
-///
-/// Dropping a table requires just `table_id`, but when dropping a table, it also needs to update
-/// the count of tables belonging to a tenant, which require tenant information.
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub struct DropTableByIdReq {
-    pub if_exists: bool,
-
-    pub tenant: String,
-
-    pub tb_id: MetaId,
-}
-
-impl DropTableByIdReq {
-    pub fn tb_id(&self) -> MetaId {
-        self.tb_id
-    }
-}
-
-impl Display for DropTableByIdReq {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "drop_table_by_id(if_exists={}):{}",
-            self.if_exists,
-            self.tb_id(),
-        )
-    }
-}
-
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct UndropTableReq {
     pub name_ident: TableNameIdent,
@@ -331,32 +299,11 @@ pub struct RenameTableReply {
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub struct UpsertTableOptionReq {
-    pub table_id: u64,
-    pub seq: MatchSeq,
-
-    /// Add or remove options
-    ///
-    /// Some(String): add or update an option.
-    /// None: delete an option.
-    pub options: HashMap<String, Option<String>>,
-}
-
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
 pub enum SetTableColumnMaskPolicyAction {
     // new mask name, old mask name(if any)
     Set(String, Option<String>),
     // prev mask name
     Unset(String),
-}
-
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub struct SetTableColumnMaskPolicyReq {
-    pub tenant: String,
-    pub table_id: u64,
-    pub seq: MatchSeq,
-    pub column: String,
-    pub action: SetTableColumnMaskPolicyAction,
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]

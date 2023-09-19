@@ -18,7 +18,6 @@ use std::fmt::Formatter;
 
 use chrono::DateTime;
 use chrono::Utc;
-use common_meta_types::MetaId;
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Eq, PartialEq, Default)]
 pub struct VirtualColumnNameIdent {
@@ -45,14 +44,6 @@ impl Display for VirtualColumnNameIdent {
     }
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Eq, PartialEq)]
-pub struct VirtualColumnMeta {
-    pub table_id: MetaId,
-
-    pub virtual_columns: Vec<String>,
-    pub created_on: DateTime<Utc>,
-    pub updated_on: Option<DateTime<Utc>>,
-}
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct CreateVirtualColumnReq {
@@ -105,18 +96,3 @@ impl Display for DropVirtualColumnReq {
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct DropVirtualColumnReply {}
-
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq, Eq)]
-pub struct ListVirtualColumnsReq {
-    pub tenant: String,
-    pub table_id: Option<MetaId>,
-}
-
-impl ListVirtualColumnsReq {
-    pub fn new(tenant: impl Into<String>, table_id: Option<MetaId>) -> ListVirtualColumnsReq {
-        ListVirtualColumnsReq {
-            tenant: tenant.into(),
-            table_id,
-        }
-    }
-}

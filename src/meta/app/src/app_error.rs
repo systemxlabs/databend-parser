@@ -15,7 +15,6 @@
 use std::fmt::Display;
 
 use common_exception::ErrorCode;
-use common_meta_types::MatchSeq;
 use serde::Deserialize;
 use serde::Serialize;
 
@@ -228,26 +227,6 @@ impl UndropTableHasNoHistory {
     pub fn new(table_name: impl Into<String>) -> Self {
         Self {
             table_name: table_name.into(),
-        }
-    }
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, thiserror::Error)]
-#[error("TableVersionMismatched: {table_id} expect `{expect}` but `{curr}`  while `{context}`")]
-pub struct TableVersionMismatched {
-    table_id: u64,
-    expect: MatchSeq,
-    curr: u64,
-    context: String,
-}
-
-impl TableVersionMismatched {
-    pub fn new(table_id: u64, expect: MatchSeq, curr: u64, context: impl Into<String>) -> Self {
-        Self {
-            table_id,
-            expect,
-            curr,
-            context: context.into(),
         }
     }
 }
@@ -792,8 +771,6 @@ impl VirtualColumnNotFound {
 /// The application does not get expected result but there is nothing wrong with meta-service.
 #[derive(thiserror::Error, serde::Serialize, serde::Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum AppError {
-    #[error(transparent)]
-    TableVersionMismatched(#[from] TableVersionMismatched),
 
     #[error(transparent)]
     DuplicatedUpsertFiles(#[from] DuplicatedUpsertFiles),
@@ -992,8 +969,6 @@ impl AppErrorMessage for UnknownTable {
 impl AppErrorMessage for UnknownTableId {}
 
 impl AppErrorMessage for UnknownDatabaseId {}
-
-impl AppErrorMessage for TableVersionMismatched {}
 
 impl AppErrorMessage for DuplicatedUpsertFiles {}
 
@@ -1265,9 +1240,6 @@ impl From<AppError> for ErrorCode {
             }
             AppError::UndropTableHasNoHistory(err) => {
                 ErrorCode::UndropTableHasNoHistory(err.message())
-            }
-            AppError::TableVersionMismatched(err) => {
-                ErrorCode::TableVersionMismatched(err.message())
             }
             AppError::ShareAlreadyExists(err) => ErrorCode::ShareAlreadyExists(err.message()),
             AppError::UnknownShare(err) => ErrorCode::UnknownShare(err.message()),
