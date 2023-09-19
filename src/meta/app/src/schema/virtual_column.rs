@@ -120,32 +120,3 @@ impl ListVirtualColumnsReq {
         }
     }
 }
-
-mod kvapi_key_impl {
-    use common_meta_kvapi::kvapi;
-
-    use crate::schema::VirtualColumnNameIdent;
-    use crate::schema::PREFIX_VIRTUAL_COLUMN;
-
-    /// <prefix>/<tenant>/<table_id>
-    impl kvapi::Key for VirtualColumnNameIdent {
-        const PREFIX: &'static str = PREFIX_VIRTUAL_COLUMN;
-
-        fn to_string_key(&self) -> String {
-            kvapi::KeyBuilder::new_prefixed(Self::PREFIX)
-                .push_str(&self.tenant)
-                .push_u64(self.table_id)
-                .done()
-        }
-
-        fn from_str_key(s: &str) -> Result<Self, kvapi::KeyError> {
-            let mut p = kvapi::KeyParser::new_prefixed(s, Self::PREFIX)?;
-
-            let tenant = p.next_str()?;
-            let table_id = p.next_u64()?;
-            p.done()?;
-
-            Ok(VirtualColumnNameIdent { tenant, table_id })
-        }
-    }
-}
