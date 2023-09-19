@@ -19,7 +19,6 @@ members = [
     "src/query/ast",
 
     # Meta
-    "src/meta/stoerr",
     "src/meta/app",
 ]
 
