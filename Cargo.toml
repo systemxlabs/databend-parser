@@ -11,9 +11,7 @@ members = [
     # Common
     "src/common/arrow",
     "src/common/base",
-    "src/common/building",
     "src/common/exception",
-    "src/common/hashtable",
     "src/common/io",
     # Query
     "src/query/ast",
